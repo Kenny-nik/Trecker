@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "django_filters",
     'drf_yasg',
-    "corsheaders"
+    "corsheaders",
     'users',
     'habit',
 ]
@@ -116,3 +116,21 @@ AUTH_USER_MODEL = "users.User"
 CORS_ALLOWED_ORIGINS = ["http://localhost:8000"] #Замените на адрес вашего фронтенд-сервера
 # CSRF_TRUSTED_ORIGINS = ["https://read-and-write.example.com"] # Замените на адрес вашего фронтенд-сервера и добавьте адрес бэкенд-сервера
 CORS_ALLOW_ALL_ORIGINS = False
+
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CELERY_BEAT_SCHEDULE = {
+    "send_information": {
+        "task": "habit.tasks.telegram_notice",
+        "schedule": timedelta(days=1),
+    },
+}
+
+TG_URL = os.getenv("TG_URL")
+TG_TOKEN = os.getenv("TG_TOKEN")
