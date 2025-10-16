@@ -1,10 +1,11 @@
 import os
+
 import django
 from django.conf import settings
 
 # Настройка Django окружения
 if not settings.configured:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
     django.setup()
 
 from rest_framework import status
