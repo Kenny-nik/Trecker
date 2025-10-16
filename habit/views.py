@@ -1,0 +1,38 @@
+from rest_framework import generics
+
+from habit.models import Habits
+from habit.serializers import HabitsSerializer
+
+
+class HabitsCreateAPIView(generics.CreateAPIView):
+    """Создание привычки"""
+    serializer_class = HabitsSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class HabitsListAPIView(generics.ListAPIView):
+    """Список привычек"""
+    serializer_class = HabitsSerializer
+    queryset = Habits.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+
+class HabitsRetrieveAPIView(generics.RetrieveAPIView):
+    """Просмотр привычки"""
+    serializer_class = HabitsSerializer
+    queryset = Habits.objects.all()
+
+
+class HabitsUpdateAPIView(generics.UpdateAPIView):
+    """Изменение привычки"""
+    serializer_class = HabitsSerializer
+    queryset = Habits.objects.all()
+
+
+class HabitsDestroyAPIView(generics.DestroyAPIView):
+    """Удаление привычки"""
+    queryset = Habits.objects.all()
