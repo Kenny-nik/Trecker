@@ -24,7 +24,6 @@ class HabitsListAPIView(generics.ListAPIView):
         return self.queryset.filter(user=self.request.user)
 
 
-
 class HabitsRetrieveAPIView(generics.RetrieveAPIView):
     """Просмотр привычки"""
     serializer_class = HabitsSerializer
