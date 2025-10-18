@@ -8,7 +8,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = True if os.getenv("DEBUG") else False
+DEBUG = os.getenv("DEBUG", "0").strip().lower() in ("1", "true", "yes")
 
 ALLOWED_HOSTS = []
 
@@ -115,9 +115,7 @@ AUTH_USER_MODEL = "users.User"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000"
-]  # Замените на адрес вашего фронтенд-сервера
-# CSRF_TRUSTED_ORIGINS = ["https://read-and-write.example.com"] # Замените на адрес вашего фронтенд-сервера и добавьте
-# адрес бэкенд-сервера
+]
 CORS_ALLOW_ALL_ORIGINS = False
 
 CELERY_TIMEZONE = TIME_ZONE

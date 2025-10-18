@@ -11,7 +11,7 @@ class Habits(models.Model):
         on_delete=models.CASCADE,
         related_name="user",
         help_text="Создатель привычки",
-        **NULLABLE
+        **NULLABLE,
     )
     place = models.CharField(
         max_length=100,
@@ -50,7 +50,9 @@ class Habits(models.Model):
     )
 
     def __str__(self):
-        return self.user
+        # Строковое, безопасное и полезное представление
+        user_email = self.user.email if self.user else "anonymous"
+        return f"{self.act} @ {self.time} ({user_email})"
 
     class Meta:
         verbose_name = "Привычка"

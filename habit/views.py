@@ -15,10 +15,11 @@ class HabitsCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
 class PublishedHabitsListAPIView(generics.ListAPIView):
     """Список публичных привычек"""
 
-    queryset = Habits.objects.filter(is_published=True)
+    queryset = Habits.objects.filter(is_published=True).order_by("id")
     serializer_class = HabitsSerializer
     pagination_class = HabitPagination
     permission_classes = (AllowAny,)
@@ -28,7 +29,7 @@ class HabitsListAPIView(generics.ListAPIView):
     """Список привычек"""
 
     serializer_class = HabitsSerializer
-    queryset = Habits.objects.all()
+    queryset = Habits.objects.order_by("id")
     pagination_class = HabitPagination
 
     def get_queryset(self):
